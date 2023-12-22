@@ -4,6 +4,7 @@ import { useFormState, useFormStatus } from "react-dom"
 import { createProduct } from "@/lib/actions"
 import { useEffect, useRef } from "react"
 import toast from 'react-hot-toast'
+import FileUpload from "./FileUpload"
 
 
 export default function CreateForm() {
@@ -37,6 +38,9 @@ export default function CreateForm() {
             <dialog id="my_modal_3" className="modal">
                 <div className="modal-box">
                     <h2 className="text-2xl font-bold pm-4">Create Product</h2>
+
+                    <FileUpload />
+                    
                     <form ref={ref} action={formAction}>
                         <div className="form-control w-full max-w-xs py-4">
                             <label htmlFor="name">Name</label>
@@ -48,6 +52,7 @@ export default function CreateForm() {
                                 required
                             />
                         </div>
+
                         <div className="form-control w-full max-w-xs py-4">
                             <label htmlFor="image">Image</label>
                             <input

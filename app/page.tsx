@@ -7,7 +7,7 @@ import Rating from './rating'
 import DeleteForm from './delete-form'
 
 export default async function Home() {
-  await dbConnect()
+  await dbConnect();
   const products = (await ProductModel.find({}).sort({
     _id: -1,
   })) as Product[]
