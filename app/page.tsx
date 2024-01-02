@@ -1,10 +1,12 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { Toaster } from 'react-hot-toast'
 import CreateForm from './create-form'
 import dbConnect from '@/lib/dbConnect'
 import ProductModel, { Product } from '@/lib/product-model'
 import Rating from './rating'
 import DeleteForm from './delete-form'
+import UpdateForm from './update-form'
 
 export default async function Home() {
   await dbConnect();
@@ -52,6 +54,10 @@ export default async function Home() {
 
                   <Rating value={product.rating} /> </td>
                 <td>
+                  
+                <UpdateForm
+                    _id={product._id.toString()}                
+                  />                  
                   <DeleteForm
                     _id={product._id.toString()}
                     name={product.name}
