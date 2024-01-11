@@ -1,6 +1,7 @@
 import { writeFile } from 'fs/promises'
 import { NextRequest, NextResponse} from 'next/server'
 import { join } from  'path'
+import { revalidatePath } from 'next/cache'
 
 export async function POST(request: NextRequest) {
     const data = await request.formData()
@@ -10,6 +11,8 @@ export async function POST(request: NextRequest) {
     {
         return NextResponse.json({ success: false})        
     }
+
+    console.log(file);
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes)

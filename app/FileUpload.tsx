@@ -38,6 +38,7 @@ export default function FileUpload() {
             <input 
               type='file' 
               name='file' 
+              accept="images/*"
               onChange={(e) => setFile(e.target.files?.[0] as any) } 
             />
             <button type="submit">Upload</button>
