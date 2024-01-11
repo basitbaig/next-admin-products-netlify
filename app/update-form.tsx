@@ -16,7 +16,7 @@ export default function UpdateForm({
 
 
     const id = useId();
-    console.log(id);
+    // console.log(id);
     
 
     const [state, formAction] = useFormState(updateProduct, {
@@ -61,8 +61,6 @@ export default function UpdateForm({
     const handleUpdateCall = cache(async () => {
 
         const res = await findProduct(_id)
-
-        //console.log({ ...res });
 
         setValues(values => {
             return { ...values, ...res }
