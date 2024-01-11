@@ -63,15 +63,10 @@ export async function findProduct(_pid: any){
     const schema = z.object({
         _id: z.string().min(1),
     })
-    // const data = schema.parse({
-    //     _id: formData.get('_id'),
-    // })
 
      const data = schema.parse({
         _id: _pid,
     })
-
-     
 
     try {
         await dbConnect()
@@ -100,24 +95,30 @@ export async function updateProduct(prevState: any, formData: FormData){
         _id: formData.get('_id'),
         name: formData.get('name'),
         image: formData.get('image'),
-        price: Number(formData.get('price')),
-        rating: Number(formData.get('rating')),       
+        price: Number(formData.get('price')), 
+        rating: Math.ceil(Math.random() * 5),        
     })
-
+ 
     if(!parse.success) {
         console.log(parse.error)
         return { message: 'Form data is not valid' }
     }
+    else
+    {
+        const data = parse.data
+        try {         
+            await dbConnect()
+            await ProductModel.findOneAndUpdate({_id: data._id},data)
+            revalidatePath('/')
+            console.log({ message: `Updated product ${data.name}`})
+            return { message: `Updated product ${data.name}`}
+        } catch (error) {
+            return { message: 'Fail to update product' }
+        }
 
-    const data = parse.data
-    try {
-        await dbConnect()
-        await ProductModel.findOneAndUpdate({_id: data._id},data)
-        revalidatePath('/')
-        console.log({ message: `Updated product ${data.name}`})
-        return { message: `Updated product ${data.name}`}
-    } catch (error) {
-        return { message: 'Faild to update product' }
+        
     }
+
+
 }
 

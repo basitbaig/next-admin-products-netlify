@@ -29,6 +29,18 @@ export default function UpdateForm({
 
     const ref = useRef<HTMLFormElement>(null)
 
+    useEffect(() => {
+        if (state.message.indexOf('Updated product') === 0) {
+            (document.getElementById(id) as any).close();
+            ref.current?.reset()
+            toast(state.message)
+        }
+        else if (state.message) {
+            toast(state.message)
+        }
+    }, [state.message])
+
+
     const initialValues = {                   // type all the fields you need
         name: '',
         image: '',
@@ -45,50 +57,24 @@ export default function UpdateForm({
             return { ...values, [e.target.name]: e.target.value }
         })
     }
-
-    //  useEffect(()=>{
-    //     try {
-
-
-    //         // fetchCareHomes().then(data =>{
-    //         //   setCareHomeData(data)
-    //         // })
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    //   },[])  
-
+ 
     const handleUpdateCall = cache(async () => {
 
         const res = await findProduct(_id)
 
-        console.log({ ...res });
+        //console.log({ ...res });
 
         setValues(values => {
             return { ...values, ...res }
         })
 
     })
-
-    async function handleUpdate() {
-
-    }
-
-
+ 
     return (
         <>
             <div>
 
-                <form action={handleUpdateCall}>
-
-                    <input type="hidden" name="_id" value={_id} />
-
-
-
-                    {/* <button type="submit" disabled={pending} className="btn btn-ghost">
-                Update
-            </button> */}
-
+                <form action={handleUpdateCall}>                   
                     <button type="submit" disabled={pending} className="btn btn-ghost"
                         onClick={() => startTransition(() => (document.getElementById(id)! as any).showModal())}
                     >
@@ -105,7 +91,8 @@ export default function UpdateForm({
                             <FileUpload />
 
                             <form ref={ref} action={formAction}>
-
+                                
+                                <input type="hidden" name="_id" value={_id} />
                                 <div className="form-control w-full max-w-xs py-4">
                                     <label htmlFor="name">Name</label>
                                     <input
